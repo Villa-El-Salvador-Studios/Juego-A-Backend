@@ -11,5 +11,7 @@ public class PersonajeResource
     public int Ataque { get; set; }
     public int Experiencia { get; set; }
     public string Imagen { get; set; }
+    
+    // Correccion para que aparezca correctamente el foreign key.
     public int JugadorId { get; set; }
 }
