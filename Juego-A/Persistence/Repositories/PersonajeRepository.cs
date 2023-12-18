@@ -22,6 +22,12 @@ public class PersonajeRepository : BaseRepository, IPersonajeRepository
         return await _context.Personajes.FindAsync(id);
     }
 
+    public async Task<Personaje> FindByNombreAsync(string nombre)
+    {
+        return await _context.Personajes
+            .FirstOrDefaultAsync(p => p.Nombre == nombre);
+    }
+
     public async Task AddAsync(Personaje personaje)
     {
         await _context.Personajes.AddAsync(personaje);

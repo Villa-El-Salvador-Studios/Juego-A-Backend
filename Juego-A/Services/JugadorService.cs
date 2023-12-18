@@ -23,6 +23,11 @@ public class JugadorService : IJugadorService
 
     public async Task<JugadorResponse> SaveAsync(Jugador jugador)
     {
+        var existingUsuario = await _jugadorRepository.FindByUsuarioAsync(jugador.Usuario);
+        
+        if (existingUsuario != null)
+            return new JugadorResponse("Ya existe un jugador con ese nombre de usuario registrado.");
+        
         try
         {
             await _jugadorRepository.AddAsync(jugador);

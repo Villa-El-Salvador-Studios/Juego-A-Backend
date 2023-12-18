@@ -23,6 +23,11 @@ public class PersonajeService : IPersonajeService
 
     public async Task<PersonajeResponse> SaveAsync(Personaje personaje)
     {
+        var existingPersonaje = await _personajeRepository.FindByNombreAsync(personaje.Nombre);
+        
+        if (existingPersonaje != null)
+            return new PersonajeResponse("Ya existe un personaje con ese nombre registrado.");
+        
         try
         {
             await _personajeRepository.AddAsync(personaje);
