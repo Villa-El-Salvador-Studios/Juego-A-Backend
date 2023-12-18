@@ -20,7 +20,6 @@
 
     <ItemGroup>
       <Folder Include="Juego-A\Controllers\" />
-      <Folder Include="Juego-A\Domain\Repositories\" />
       <Folder Include="Juego-A\Persistence\" />
       <Folder Include="Juego-A\Services\" />
       <Folder Include="Shared\Persistence\Contexts\" />
