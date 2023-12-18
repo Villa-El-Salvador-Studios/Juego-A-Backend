@@ -17,6 +17,11 @@ public class JugadorRepository : BaseRepository, IJugadorRepository
         return await _context.Jugadores.ToListAsync();
     }
 
+    public async Task<Jugador> FindByIdAsync(int id)
+    {
+        return await _context.Jugadores.FindAsync(id);
+    }
+
     public async Task AddAsync(Jugador jugador)
     {
         await _context.Jugadores.AddAsync(jugador);

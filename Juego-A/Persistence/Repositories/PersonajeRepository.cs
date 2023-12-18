@@ -17,6 +17,11 @@ public class PersonajeRepository : BaseRepository, IPersonajeRepository
         return await _context.Personajes.ToListAsync();
     }
 
+    public async Task<Personaje> FindByIdAsync(int id)
+    {
+        return await _context.Personajes.FindAsync(id);
+    }
+
     public async Task AddAsync(Personaje personaje)
     {
         await _context.Personajes.AddAsync(personaje);

@@ -5,6 +5,7 @@ namespace JuegoA_API.Juego_A.Domain.Repositories;
 public interface IJugadorRepository
 {
     Task<IEnumerable<Jugador>> ListAsync();
+    Task<Jugador> FindByIdAsync(int id);
     Task AddAsync(Jugador jugador);
     void Update(Jugador jugador);
     void Remove(Jugador jugador);
