@@ -22,7 +22,6 @@
       <Folder Include="Juego-A\Controllers\" />
       <Folder Include="Juego-A\Persistence\" />
       <Folder Include="Juego-A\Services\" />
-      <Folder Include="Shared\Persistence\Contexts\" />
       <Folder Include="Shared\Persistence\Respositories\" />
     </ItemGroup>
 
