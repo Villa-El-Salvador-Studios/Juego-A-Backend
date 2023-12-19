@@ -28,6 +28,21 @@ public class JugadoresController : ControllerBase
             IEnumerable<JugadorResource>>(jugadores);
         return resources;
     }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var jugador = await _jugadorService.ReturnById(id);
+        
+        if (jugador == null)
+        {
+            return NotFound($"Jugador con ID {id} no encontrado.");
+        }
+        
+        var jugadorResource = _mapper.Map<Jugador, JugadorResource>(jugador);
+
+        return Ok(jugadorResource);
+    }
     
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] SaveJugadorResource resource)

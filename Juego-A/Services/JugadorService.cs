@@ -21,6 +21,11 @@ public class JugadorService : IJugadorService
         return await _jugadorRepository.ListAsync();
     }
 
+    public async Task<Jugador> ReturnById(int id)
+    {
+        return await _jugadorRepository.FindByIdAsync(id);
+    }
+
     public async Task<JugadorResponse> SaveAsync(Jugador jugador)
     {
         var existingUsuario = await _jugadorRepository.FindByUsuarioAsync(jugador.Usuario);
