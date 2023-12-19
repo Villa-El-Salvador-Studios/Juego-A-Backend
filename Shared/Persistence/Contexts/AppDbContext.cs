@@ -47,7 +47,7 @@ public class AppDbContext : DbContext
         builder.Entity<Jugador>()
             .HasMany(p => p.Personajes)
             .WithOne(p => p.Jugador)
-            .HasForeignKey(p => p.JugadorId);
+            .HasForeignKey(p => p.JugadorId).IsRequired(false);
 
         // Relacion entre mundo y jugador (uno a uno)
         builder.Entity<Mundo>()

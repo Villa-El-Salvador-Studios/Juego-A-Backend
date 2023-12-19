@@ -8,5 +8,5 @@ public class SavePersonajeResource
     public int Ataque { get; set; }
     public int Experiencia { get; set; }
     public string Imagen { get; set; }
-    public int JugadorId { get; set; }
+    public int? JugadorId { get; set; }
 }

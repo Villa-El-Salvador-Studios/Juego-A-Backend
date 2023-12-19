@@ -11,7 +11,7 @@ public class Personaje
     public string Imagen { get; set; }
     
     // Relaciones
-    public int JugadorId { get; set; }
+    public int? JugadorId { get; set; }
     public Jugador Jugador { get; set; }
     public Mundo Mundo { get; set; }
 }
