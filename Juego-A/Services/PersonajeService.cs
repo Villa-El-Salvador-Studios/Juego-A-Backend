@@ -21,6 +21,11 @@ public class PersonajeService : IPersonajeService
         return await _personajeRepository.ListAsync();
     }
 
+    public async Task<Personaje> ReturnById(int id)
+    {
+        return await _personajeRepository.FindByIdAsync(id);
+    }
+
     public async Task<PersonajeResponse> SaveAsync(Personaje personaje)
     {
         var existingPersonaje = await _personajeRepository.FindByNombreAsync(personaje.Nombre);

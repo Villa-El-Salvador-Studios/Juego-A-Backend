@@ -28,6 +28,21 @@ public class PersonajesController : ControllerBase
         return resources;
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(int id)
+    {
+        var personaje = await _personajeService.ReturnById(id);
+        
+        if (personaje == null)
+        {
+            return NotFound($"Personaje con ID {id} no encontrado.");
+        }
+        
+        var personajeResource = _mapper.Map<Personaje, PersonajeResource>(personaje);
+
+        return Ok(personajeResource);
+    }
+    
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] SavePersonajeResource resource)
     {
