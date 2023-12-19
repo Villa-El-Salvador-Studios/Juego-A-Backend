@@ -54,6 +54,8 @@ public class JugadorService : IJugadorService
         
         existingJugador.Contrasenia = jugador.Contrasenia;
         existingJugador.fotoPerfil = jugador.fotoPerfil;
+        existingJugador.MundoMaximo = jugador.MundoMaximo;
+        existingJugador.MundoId = jugador.MundoId;
         
         try
         {

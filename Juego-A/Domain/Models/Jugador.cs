@@ -9,7 +9,8 @@ public class Jugador
     public int MundoMaximo { get; set; }
 
     // Relaciones
-    public IList<Personaje> Personajes = new List<Personaje>();
-    public int Mundo_Id { get; set; }
+    public int? MundoId { get; set; } // Puede ser opcional
     public Mundo Mundo { get; set; }
+    
+    public IList<Personaje> Personajes = new List<Personaje>();
 }
