@@ -78,6 +78,24 @@ public class JugadoresController : ControllerBase
 
         return Ok(jugadorResource);
     }
+
+    [HttpPost("verificar-usuario")]
+    public async Task<IActionResult> BuscarUsuario([FromBody] VerifyUserResource verifyUserResource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+
+        var jugador = await _jugadorService.GetByUsuario(verifyUserResource.Usuario);
+
+        if (jugador == null)
+        {
+            return NotFound("No existe ese usuario en la base de datos.");
+        }
+
+        var jugadorResource = _mapper.Map<Jugador, JugadorResource>(jugador);
+
+        return Ok(jugadorResource);
+    }
     
     [HttpPut("{id}")]
     public async Task<IActionResult> PutAsync(int id, [FromBody] SaveJugadorResource resource)
