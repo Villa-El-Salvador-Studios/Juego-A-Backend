@@ -28,6 +28,12 @@ public class JugadorRepository : BaseRepository, IJugadorRepository
             .FirstOrDefaultAsync(j => j.Usuario == usuario);
     }
 
+    public async Task<Jugador> FindByUsuarioYContraseniaAsync(string usuario, string contrasenia)
+    {
+        return await _context.Jugadores
+            .FirstOrDefaultAsync(j => j.Usuario == usuario && j.Contrasenia == contrasenia);
+    }
+
     public async Task AddAsync(Jugador jugador)
     {
         await _context.Jugadores.AddAsync(jugador);

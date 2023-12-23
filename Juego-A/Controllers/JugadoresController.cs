@@ -61,6 +61,24 @@ public class JugadoresController : ControllerBase
         return Ok(jugadorResource);
     }
     
+    [HttpPost("buscar")]
+    public async Task<IActionResult> BuscarJugadorAsync([FromBody] LoginResource loginResource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+
+        var jugador = await _jugadorService.GetByUsuarioYContraseniaAsync(loginResource.Usuario, loginResource.Contraseña);
+
+        if (jugador == null)
+        {
+            return NotFound("Jugador no encontrado con las credenciales proporcionadas.");
+        }
+
+        var jugadorResource = _mapper.Map<Jugador, JugadorResource>(jugador);
+
+        return Ok(jugadorResource);
+    }
+    
     [HttpPut("{id}")]
     public async Task<IActionResult> PutAsync(int id, [FromBody] SaveJugadorResource resource)
     {

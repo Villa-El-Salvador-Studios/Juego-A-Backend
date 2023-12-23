@@ -26,6 +26,11 @@ public class JugadorService : IJugadorService
         return await _jugadorRepository.FindByIdAsync(id);
     }
 
+    public async Task<Jugador> GetByUsuarioYContraseniaAsync(string usuario, string contrasenia)
+    {
+        return await _jugadorRepository.FindByUsuarioYContraseniaAsync(usuario, contrasenia);
+    }
+
     public async Task<JugadorResponse> SaveAsync(Jugador jugador)
     {
         var existingUsuario = await _jugadorRepository.FindByUsuarioAsync(jugador.Usuario);
