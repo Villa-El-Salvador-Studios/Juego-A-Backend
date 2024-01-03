@@ -41,6 +41,9 @@ public class AppDbContext : DbContext
         builder.Entity<Mundo>().Property(p=>p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Mundo>().Property(p=>p.Xp).IsRequired();
         builder.Entity<Mundo>().Property(p=>p.Estado).IsRequired();
+        builder.Entity<Mundo>().Property(p => p.ImagenFondo).IsRequired();
+        builder.Entity<Mundo>().Property(p => p.SongId).IsRequired();
+        builder.Entity<Mundo>().Property(p => p.Nombre).IsRequired();
         
         // Relaciones
         // Relacion entre jugador y personaje (uno a muchos)

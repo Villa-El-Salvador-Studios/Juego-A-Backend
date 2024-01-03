@@ -10,5 +10,6 @@ public class ResourceToModelProfile : Profile
     {
         CreateMap<SaveJugadorResource, Jugador>();
         CreateMap<SavePersonajeResource, Personaje>();
+        CreateMap<SaveMundoResource, Mundo>();
     }
 }

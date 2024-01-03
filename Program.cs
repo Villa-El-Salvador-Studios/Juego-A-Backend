@@ -36,6 +36,8 @@ builder.Services.AddScoped<IJugadorRepository, JugadorRepository>();
 builder.Services.AddScoped<IJugadorService, JugadorService>();
 builder.Services.AddScoped<IPersonajeRepository, PersonajeRepository>();
 builder.Services.AddScoped<IPersonajeService, PersonajeService>();
+builder.Services.AddScoped<IMundoRepository, MundoRepository>();
+builder.Services.AddScoped<IMundoService, MundoService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // AutoMapper Configuration
 builder.Services.AddAutoMapper(
