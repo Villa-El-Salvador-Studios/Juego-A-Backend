@@ -83,4 +83,9 @@ public class MundoService : IMundoService
             return new MundoResponse($"Ocurrio un error al intentar eliminar el mundo: {e.Message}");
         }
     }
+
+    public async Task<Mundo> ReturnById(int id)
+    {
+        return await _mundoRepository.FindByIdAsync(id);
+    }
 }

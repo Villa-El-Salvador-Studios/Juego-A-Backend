@@ -9,4 +9,5 @@ public interface IMundoService
     Task<MundoResponse> SaveAsync(Mundo mundo);
     Task<MundoResponse> UpdateAsync(int id, Mundo mundo);
     Task<MundoResponse> DeleteAsync(int id);
+    Task<Mundo> ReturnById(int id);
 }

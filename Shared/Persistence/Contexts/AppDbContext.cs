@@ -10,6 +10,8 @@ public class AppDbContext : DbContext
     public DbSet<Jugador> Jugadores { get; set; }
     public DbSet<Personaje> Personajes { get; set; }
     public DbSet<Mundo> Mundos { get; set; }
+    public DbSet<Habilidades> Habilidades { get; set; }
+    public DbSet<Objeto> Objetos { get; set; }
     
     public AppDbContext(DbContextOptions options) : base(options)
     {
@@ -45,8 +47,25 @@ public class AppDbContext : DbContext
         builder.Entity<Mundo>().Property(p => p.ImagenFondo).IsRequired();
         builder.Entity<Mundo>().Property(p => p.SongId).IsRequired();
         builder.Entity<Mundo>().Property(p => p.Nombre).IsRequired();
+
+        builder.Entity<Habilidades>().ToTable("Habilidades");
+        builder.Entity<Habilidades>().HasKey(p => p.Id);
+        builder.Entity<Habilidades>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Habilidades>().Property(p => p.Habilidad1).IsRequired();
+        builder.Entity<Habilidades>().Property(p => p.Habilidad2).IsRequired();
+        builder.Entity<Habilidades>().Property(p => p.Habilidad3).IsRequired();
+        builder.Entity<Habilidades>().Property(p => p.Habilidad4).IsRequired();
+
+        builder.Entity<Objeto>().ToTable("Objetos");
+        builder.Entity<Objeto>().HasKey(p => p.Id);
+        builder.Entity<Objeto>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Objeto>().Property(p => p.Nombre).IsRequired();
+        builder.Entity<Objeto>().Property(p => p.Descripcion).IsRequired();
+        builder.Entity<Objeto>().Property(p => p.Cantidad).IsRequired();
+        builder.Entity<Objeto>().Property(p => p.Imagen).IsRequired();
         
         // Relaciones
+        
         // Relacion entre jugador y personaje (uno a muchos)
         builder.Entity<Jugador>()
             .HasMany(p => p.Personajes)
@@ -65,15 +84,36 @@ public class AppDbContext : DbContext
             .WithOne(m => m.Personaje)
             .HasForeignKey<Mundo>(m => m.Personaje_Id);
         
+        // Relacion entre personaje y habilidad (uno a uno)
+        builder.Entity<Personaje>()
+            .HasOne(p => p.Habilidades)
+            .WithOne(h => h.Personaje)
+            .HasForeignKey<Habilidades>(h => h.PersonajeId).IsRequired(false);
+        
+        // Relacion entre jugador y objeto (uno a muchos)
+        builder.Entity<Jugador>()
+            .HasMany(j => j.Objetos)
+            .WithOne(o => o.Jugador)
+            .HasForeignKey(o => o.jugadorId).IsRequired(false);
+        
         // Agregar datos por defecto a la base de datos
         builder.Entity<Personaje>().HasData(
-            new Personaje {Id = 1, Vida = 1000, Nivel = 1, Nombre = "Boss 1", Ataque = 100, Experiencia = 0, Imagen = "../../src/assets/images/boss1.png"},
-            new Personaje {Id = 2, Vida = 1500, Nivel = 2, Nombre = "Boss 2", Ataque = 150, Experiencia = 0, Imagen = "../../src/assets/images/boss2.jpg"},
-            new Personaje {Id = 3, Vida = 2250, Nivel = 3, Nombre = "Boss 3", Ataque = 225, Experiencia = 0, Imagen = "../../src/assets/images/boss3.png"},
-            new Personaje {Id = 4, Vida = 3375, Nivel = 4, Nombre = "Boss 4", Ataque = 338, Experiencia = 0, Imagen = "../../src/assets/images/boss4.png"},
-            new Personaje {Id = 5, Vida = 5063, Nivel = 5, Nombre = "Boss 5", Ataque = 506, Experiencia = 0, Imagen = "../../src/assets/images/boss5.jpeg"}
+             new Personaje {Id = 1, Vida = 1000, Nivel = 1, Nombre = "Boss 1", Ataque = 100, Experiencia = 0, Imagen = "../../src/assets/images/boss1.png"},
+             new Personaje {Id = 2, Vida = 1500, Nivel = 2, Nombre = "Boss 2", Ataque = 150, Experiencia = 0, Imagen = "../../src/assets/images/boss2.jpg"},
+             new Personaje {Id = 3, Vida = 2250, Nivel = 3, Nombre = "Boss 3", Ataque = 225, Experiencia = 0, Imagen = "../../src/assets/images/boss3.png"},
+             new Personaje {Id = 4, Vida = 3375, Nivel = 4, Nombre = "Boss 4", Ataque = 338, Experiencia = 0, Imagen = "../../src/assets/images/boss4.png"},
+             new Personaje {Id = 5, Vida = 5063, Nivel = 5, Nombre = "Boss 5", Ataque = 506, Experiencia = 0, Imagen = "../../src/assets/images/boss5.jpeg"}
         );
 
+        builder.Entity<Habilidades>().HasData(
+            new Habilidades { Id = 1, Habilidad1 = "Patada nuclear", Habilidad2 = "Patada del tigre", Habilidad3 = "Plaka", Habilidad4 = "En la 100 o en la 101", PersonajeId = 1},
+            new Habilidades { Id = 2, Habilidad1 = "Hola Dabo soy chileno", Habilidad2 = "Juan", Habilidad3 = "Voy a mostrar las tetas", Habilidad4 = "Coca Cola espuma", PersonajeId = 2},
+            new Habilidades { Id = 3, Habilidad1 = "EXPLOSIOOOOOOON", Habilidad2 = "Que toda su familia pille covid", Habilidad3 = "Coquerooo", Habilidad4 = "La tocó", PersonajeId = 3},
+            new Habilidades { Id = 4, Habilidad1 = "Ankara Messi", Habilidad2 = "Bing Chilling", Habilidad3 = "Wenomechainsama", Habilidad4 = "Metal pipe falling", PersonajeId = 4},
+            new Habilidades { Id = 5, Habilidad1 = "Ok I pull up", Habilidad2 = "Moai sound", Habilidad3 = "Wtf is a kilometer", Habilidad4 = "Hello im under the water", PersonajeId = 5},
+            new Habilidades { Id = 6, Habilidad1 = "Bichito de luz", Habilidad2 = "EPAAAAAA", Habilidad3 = "Enden ring", Habilidad4 = "Desayuna con huevo"}
+        );
+        
         builder.Entity<Mundo>().HasData(
             new Mundo {Id = 1, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/bg1.jpg", SongId = 1, Nombre = "Mundo 1", Personaje_Id = 1},
             new Mundo {Id = 2, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/bg2.jpg", SongId = 2, Nombre = "Mundo 2", Personaje_Id = 2},
@@ -83,7 +123,6 @@ public class AppDbContext : DbContext
         );
         
         // Aplicar Snake Case Naming Convention
- 
         builder.UseSnakeCaseNamingConvention();
     }
 }

@@ -13,4 +13,6 @@ public class Jugador
     public Mundo Mundo { get; set; }
     
     public IList<Personaje> Personajes = new List<Personaje>();
+
+    public IList<Objeto> Objetos = new List<Objeto>();
 }

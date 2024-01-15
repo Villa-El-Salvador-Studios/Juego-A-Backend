@@ -29,20 +29,18 @@ public class MundosController : ControllerBase
         return resources;
     }
     
-    [HttpPost]
-    public async Task<IActionResult> PostAsync([FromBody] SaveMundoResource resource)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetByIdAsync(int id)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState.GetErrorMessages());
+        var mundo = await _mundoService.ReturnById(id);
         
-        var mundo = _mapper.Map<SaveMundoResource, Mundo>(resource);
-        var result = await _mundoService.SaveAsync(mundo);
+        if (mundo == null)
+        {
+            return NotFound($"Mundo con ID {id} no encontrado.");
+        }
         
-        if (!result.Success)
-            return BadRequest(result.Message);
-        
-        var mundoResource = _mapper.Map<Mundo, MundoResource>(result.Resource);
-        
+        var mundoResource = _mapper.Map<Mundo, MundoResource>(mundo);
+
         return Ok(mundoResource);
     }
     
@@ -58,19 +56,6 @@ public class MundosController : ControllerBase
         if (!result.Success)
             return BadRequest(result.Message);
         
-        var mundoResource = _mapper.Map<Mundo, MundoResource>(result.Resource);
-        
-        return Ok(mundoResource);
-    }
-    
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(int id)
-    {
-        var result = await _mundoService.DeleteAsync(id);
-        
-        if (!result.Success)
-            return BadRequest(result.Message);
- 
         var mundoResource = _mapper.Map<Mundo, MundoResource>(result.Resource);
         
         return Ok(mundoResource);

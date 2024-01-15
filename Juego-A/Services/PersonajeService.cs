@@ -58,6 +58,7 @@ public class PersonajeService : IPersonajeService
         existingPersonaje.Ataque = personaje.Ataque;
         existingPersonaje.Experiencia = personaje.Experiencia;
         existingPersonaje.Imagen = personaje.Imagen;
+        existingPersonaje.HabilidadId = personaje.HabilidadId;
         
         try
         {
