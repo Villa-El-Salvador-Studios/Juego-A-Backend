@@ -7,4 +7,5 @@ public interface IHabilidadesService
 {
     Task<IEnumerable<Habilidades>> ListAsync();
     Task<Habilidades> ReturnById(int id);
+    Task<HabilidadesResponse> UpdateAsync(int id, Habilidades habilidades);
 }

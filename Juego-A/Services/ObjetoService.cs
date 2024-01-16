@@ -25,4 +25,25 @@ public class ObjetoService : IObjetoService
     {
         return await _objetoRepository.GetByJugadorId(id);
     }
+
+    public async Task<ObjetoResponse> UpdateAsync(int id, Objeto objeto)
+    {
+        var existingObjeto = await _objetoRepository.FindIndividualObjectByIdAsync(id);
+        
+        if (existingObjeto == null)
+            return new ObjetoResponse("Jugador no encontrado.");
+
+        existingObjeto.Cantidad = objeto.Cantidad;
+        
+        try
+        {
+            _objetoRepository.Update(existingObjeto);
+            await _unitOfWork.CompleteAsync();
+            return new ObjetoResponse(existingObjeto);
+        }
+        catch (Exception e)
+        {
+            return new ObjetoResponse($"Ocurrio un error al actualizar el objeto: {e.Message}");
+        }
+    }
 }

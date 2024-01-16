@@ -2,6 +2,7 @@
 using JuegoA_API.Juego_A.Domain.Models;
 using JuegoA_API.Juego_A.Domain.Services;
 using JuegoA_API.Juego_A.Resources;
+using JuegoA_API.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JuegoA_API.Juego_A.Controllers;
@@ -41,5 +42,22 @@ public class ObjetosController : ControllerBase
         var objetoResources = _mapper.Map<IEnumerable<Objeto>, IEnumerable<ObjetoResource>>(objetos);
 
         return Ok(objetoResources);
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id, [FromBody] SaveObjetoResource resource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+ 
+        var objeto = _mapper.Map<SaveObjetoResource, Objeto>(resource);
+        var result = await _objetoService.UpdateAsync(id, objeto);
+ 
+        if (!result.Success)
+            return BadRequest(result.Message);
+        
+        var objetoResource = _mapper.Map<Objeto, ObjetoResource>(result.Resource);
+        
+        return Ok(objetoResource);
     }
 }

@@ -40,4 +40,9 @@ public class ObjetoRepository : BaseRepository, IObjetoRepository
 
         return objetos;
     }
+
+    public async Task<Objeto> FindIndividualObjectByIdAsync(int id)
+    {
+        return await _context.Objetos.FirstOrDefaultAsync(o => o.Id == id);
+    }
 }

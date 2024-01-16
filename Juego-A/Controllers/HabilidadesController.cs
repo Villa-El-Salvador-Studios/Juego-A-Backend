@@ -2,6 +2,7 @@
 using JuegoA_API.Juego_A.Domain.Models;
 using JuegoA_API.Juego_A.Domain.Services;
 using JuegoA_API.Juego_A.Resources;
+using JuegoA_API.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JuegoA_API.Juego_A.Controllers;
@@ -40,6 +41,23 @@ public class HabilidadesController : ControllerBase
         
         var habilidadesResource = _mapper.Map<Habilidades, HabilidadesResource>(habilidades);
 
+        return Ok(habilidadesResource);
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id, [FromBody] SaveHabilidadesResource resource)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState.GetErrorMessages());
+ 
+        var habilidades = _mapper.Map<SaveHabilidadesResource, Habilidades>(resource);
+        var result = await _habilidadesService.UpdateAsync(id, habilidades);
+ 
+        if (!result.Success)
+            return BadRequest(result.Message);
+        
+        var habilidadesResource = _mapper.Map<Habilidades, HabilidadesResource>(result.Resource);
+        
         return Ok(habilidadesResource);
     }
 }

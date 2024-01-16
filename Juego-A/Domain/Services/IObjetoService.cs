@@ -8,4 +8,5 @@ public interface IObjetoService
 {
     Task<IEnumerable<Objeto>> ListAsync();
     Task<IEnumerable<Objeto>> ReturnById(int id);
+    Task<ObjetoResponse> UpdateAsync(int id, Objeto objeto);
 }
