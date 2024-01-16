@@ -21,7 +21,7 @@ public class ObjetoService : IObjetoService
         return await _objetoRepository.ListAsync();
     }
 
-    public async Task<IEnumerable<Objeto>> ReturnById(int id)
+    public async Task<IEnumerable<Objeto>> ReturnByJugadorId(int id)
     {
         return await _objetoRepository.GetByJugadorId(id);
     }
@@ -34,6 +34,7 @@ public class ObjetoService : IObjetoService
             return new ObjetoResponse("Jugador no encontrado.");
 
         existingObjeto.Cantidad = objeto.Cantidad;
+        existingObjeto.jugadorId = objeto.jugadorId;
         
         try
         {

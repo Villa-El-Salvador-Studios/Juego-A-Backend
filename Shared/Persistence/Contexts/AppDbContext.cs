@@ -98,11 +98,11 @@ public class AppDbContext : DbContext
         
         // Agregar datos por defecto a la base de datos
         builder.Entity<Personaje>().HasData(
-             new Personaje {Id = 1, Vida = 1000, Nivel = 1, Nombre = "Boss 1", Ataque = 100, Experiencia = 0, Imagen = "../../src/assets/images/boss1.png"},
-             new Personaje {Id = 2, Vida = 1500, Nivel = 2, Nombre = "Boss 2", Ataque = 150, Experiencia = 0, Imagen = "../../src/assets/images/boss2.jpg"},
-             new Personaje {Id = 3, Vida = 2250, Nivel = 3, Nombre = "Boss 3", Ataque = 225, Experiencia = 0, Imagen = "../../src/assets/images/boss3.png"},
-             new Personaje {Id = 4, Vida = 3375, Nivel = 4, Nombre = "Boss 4", Ataque = 338, Experiencia = 0, Imagen = "../../src/assets/images/boss4.png"},
-             new Personaje {Id = 5, Vida = 5063, Nivel = 5, Nombre = "Boss 5", Ataque = 506, Experiencia = 0, Imagen = "../../src/assets/images/boss5.jpeg"}
+             new Personaje {Id = 1, Vida = 1000, Nivel = 1, Nombre = "Boss 1", Ataque = 100, Experiencia = 0, Imagen = "../../src/assets/images/bosses/boss1.png"},
+             new Personaje {Id = 2, Vida = 1500, Nivel = 2, Nombre = "Boss 2", Ataque = 150, Experiencia = 0, Imagen = "../../src/assets/images/bosses/boss2.jpg"},
+             new Personaje {Id = 3, Vida = 2250, Nivel = 3, Nombre = "Boss 3", Ataque = 225, Experiencia = 0, Imagen = "../../src/assets/images/bosses/boss3.png"},
+             new Personaje {Id = 4, Vida = 3375, Nivel = 4, Nombre = "Boss 4", Ataque = 338, Experiencia = 0, Imagen = "../../src/assets/images/bosses/boss4.png"},
+             new Personaje {Id = 5, Vida = 5063, Nivel = 5, Nombre = "Boss 5", Ataque = 506, Experiencia = 0, Imagen = "../../src/assets/images/bosses/boss5.jpeg"}
         );
 
         builder.Entity<Habilidades>().HasData(
@@ -115,11 +115,20 @@ public class AppDbContext : DbContext
         );
         
         builder.Entity<Mundo>().HasData(
-            new Mundo {Id = 1, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/bg1.jpg", SongId = 1, Nombre = "Mundo 1", Personaje_Id = 1},
-            new Mundo {Id = 2, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/bg2.jpg", SongId = 2, Nombre = "Mundo 2", Personaje_Id = 2},
-            new Mundo {Id = 3, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/bg3.png", SongId = 3, Nombre = "Mundo 3", Personaje_Id = 3},
-            new Mundo {Id = 4, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/bg4.png", SongId = 4, Nombre = "Mundo 4", Personaje_Id = 4},
-            new Mundo {Id = 5, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/bg5.jpeg", SongId = 5, Nombre = "Mundo 5", Personaje_Id = 5}
+            new Mundo {Id = 1, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/backgrounds/bg1.jpg", SongId = 1, Nombre = "Mundo 1", Personaje_Id = 1},
+            new Mundo {Id = 2, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/backgrounds/bg2.jpg", SongId = 2, Nombre = "Mundo 2", Personaje_Id = 2},
+            new Mundo {Id = 3, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/backgrounds/bg3.png", SongId = 3, Nombre = "Mundo 3", Personaje_Id = 3},
+            new Mundo {Id = 4, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/backgrounds/bg4.png", SongId = 4, Nombre = "Mundo 4", Personaje_Id = 4},
+            new Mundo {Id = 5, Xp = 100, Estado = EstadoMundo.SININICIAR, ImagenFondo = "../../src/assets/images/backgrounds/bg5.jpeg", SongId = 5, Nombre = "Mundo 5", Personaje_Id = 5}
+        );
+
+        builder.Entity<Objeto>().HasData(
+            new Objeto {Id = 1, Nombre = "Pocion de curacion S", Descripcion = "Sana heridas menores al instante. Sabor dulce y herbal.", Cantidad = 0, Imagen = "../../src/assets/images/objects/shtpt.png", jugadorId = null},
+            new Objeto {Id = 2, Nombre = "Pocion de curacion M", Descripcion = "Cura heridas moderadas, restaura vitalidad. Sabor complejo con toques de frutas.", Cantidad = 0, Imagen = "../../src/assets/images/objects/mhtpt.png", jugadorId = null},
+            new Objeto {Id = 3, Nombre = "Pocion de curacion L", Descripcion = "Sana heridas graves, restablece la salud. Sabor robusto con hierbas y especias.", Cantidad = 0, Imagen = "../../src/assets/images/objects/lhtpt.png", jugadorId = null},
+            new Objeto {Id = 4, Nombre = "Pocion de ataque", Descripcion = "Al consumirla, otorga un aumento temporal de fuerza y destreza en combate. Su sabor es intenso, con un toque picante y eléctrico que energiza al bebedor.", Cantidad = 0, Imagen = "../../src/assets/images/objects/atkpt.png", jugadorId = null},
+            new Objeto {Id = 5, Nombre = "Pocion de armadura", Descripcion = "Al beberla, crea un aura protectora alrededor del usuario, aumentando la resistencia contra ataques físicos y mágicos. Su sabor es fresco, con matices metálicos que sugieren fortaleza.", Cantidad = 0, Imagen = "../../src/assets/images/objects/ampt.png", jugadorId = null},
+            new Objeto {Id = 6, Nombre = "Pocion de veneno", Descripcion = "Esta poción se utiliza para envenenar armas o trampas. Al contacto, causa daño gradual y debilitante al objetivo. ", Cantidad = 0, Imagen = "../../src/assets/images/objects/pspt.png", jugadorId = null}
         );
         
         // Aplicar Snake Case Naming Convention

@@ -30,11 +30,11 @@ public class ObjetosController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByIdAsync(int id)
+    public async Task<IActionResult> GetByJugadorIdAsync(int id)
     {
-        var objetos = await _objetoService.ReturnById(id);
+        var objetos = await _objetoService.ReturnByJugadorId(id);
 
-        if (objetos == null || !objetos.Any())
+        if (objetos.Count() == 0)
         {
             return NotFound($"Objetos con jugador ID {id} no encontrados.");
         }
