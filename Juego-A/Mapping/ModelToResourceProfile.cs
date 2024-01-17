@@ -13,5 +13,6 @@ public class ModelToResourceProfile : Profile
         CreateMap<Mundo, MundoResource>();
         CreateMap<Habilidades, HabilidadesResource>();
         CreateMap<Objeto, ObjetoResource>();
+        CreateMap<Hechizo, HechizoResource>();
     }
 }

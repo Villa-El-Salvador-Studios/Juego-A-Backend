@@ -42,6 +42,8 @@ builder.Services.AddScoped<IHabilidadesService, HabilidadesService>();
 builder.Services.AddScoped<IHabilidadesRepository, HabilidadesRepository>();
 builder.Services.AddScoped<IObjetoService, ObjetoService>();
 builder.Services.AddScoped<IObjetoRepository, ObjetoRepository>();
+builder.Services.AddScoped<IHechizoService, HechizoService>();
+builder.Services.AddScoped<IHechizoRepository, HechizoRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // AutoMapper Configuration
 builder.Services.AddAutoMapper(

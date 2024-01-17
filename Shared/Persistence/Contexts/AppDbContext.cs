@@ -12,6 +12,8 @@ public class AppDbContext : DbContext
     public DbSet<Mundo> Mundos { get; set; }
     public DbSet<Habilidades> Habilidades { get; set; }
     public DbSet<Objeto> Objetos { get; set; }
+    public DbSet<Hechizo> Hechizos { get; set; }
+    public DbSet<JugadorHechizo> JugadorHechizos { get; set; }
     
     public AppDbContext(DbContextOptions options) : base(options)
     {
@@ -63,6 +65,19 @@ public class AppDbContext : DbContext
         builder.Entity<Objeto>().Property(p => p.Descripcion).IsRequired();
         builder.Entity<Objeto>().Property(p => p.Cantidad).IsRequired();
         builder.Entity<Objeto>().Property(p => p.Imagen).IsRequired();
+
+        builder.Entity<Hechizo>().ToTable("Hechizos");
+        builder.Entity<Hechizo>().HasKey(p => p.Id);
+        builder.Entity<Hechizo>().Property(p=>p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Hechizo>().Property(p=>p.Nombre).IsRequired();
+        builder.Entity<Hechizo>().Property(p=>p.Descripcion).IsRequired();
+        builder.Entity<Hechizo>().Property(p=>p.Cooldown).IsRequired();
+
+        builder.Entity<JugadorHechizo>().ToTable("JugadorHechizo");
+        builder.Entity<JugadorHechizo>().HasKey(p => p.JugadorId);
+        builder.Entity<JugadorHechizo>().HasKey(p => p.HechizoId);
+        builder.Entity<JugadorHechizo>().Property(p => p.JugadorId).IsRequired();
+        builder.Entity<JugadorHechizo>().Property(p => p.HechizoId).IsRequired();
         
         // Relaciones
         
@@ -95,6 +110,17 @@ public class AppDbContext : DbContext
             .HasMany(j => j.Objetos)
             .WithOne(o => o.Jugador)
             .HasForeignKey(o => o.jugadorId).IsRequired(false);
+        
+        // Relacion entre jugador y hechizo (uno a muchos)
+        builder.Entity<JugadorHechizo>()
+            .HasOne(jh => jh.Jugador)
+            .WithMany(j => j.Hechizos)
+            .HasForeignKey(jh => jh.JugadorId).IsRequired(false);
+
+        builder.Entity<JugadorHechizo>()
+            .HasOne(jh => jh.Hechizo)
+            .WithMany(h => h.Jugadores)
+            .HasForeignKey(jh => jh.HechizoId).IsRequired(false);
         
         // Agregar datos por defecto a la base de datos
         builder.Entity<Personaje>().HasData(
@@ -129,6 +155,11 @@ public class AppDbContext : DbContext
             new Objeto {Id = 4, Nombre = "Pocion de ataque", Descripcion = "Al consumirla, otorga un aumento temporal de fuerza y destreza en combate. Su sabor es intenso, con un toque picante y eléctrico que energiza al bebedor.", Cantidad = 0, Imagen = "../../src/assets/images/objects/atkpt.png", jugadorId = null},
             new Objeto {Id = 5, Nombre = "Pocion de armadura", Descripcion = "Al beberla, crea un aura protectora alrededor del usuario, aumentando la resistencia contra ataques físicos y mágicos. Su sabor es fresco, con matices metálicos que sugieren fortaleza.", Cantidad = 0, Imagen = "../../src/assets/images/objects/ampt.png", jugadorId = null},
             new Objeto {Id = 6, Nombre = "Pocion de veneno", Descripcion = "Esta poción se utiliza para envenenar armas o trampas. Al contacto, causa daño gradual y debilitante al objetivo. ", Cantidad = 0, Imagen = "../../src/assets/images/objects/pspt.png", jugadorId = null}
+        );
+
+        builder.Entity<Hechizo>().HasData(
+            new Hechizo {Id = 1, Nombre = "Silencio", Descripcion = "Envuelve al enemigo en silencio mágico, impidiéndole lanzar hechizos y atacar verbalmente durante 1 turno.", Cooldown = 3, Imagen = "../../src/assets/images/habilities/silence.png"},
+            new Hechizo {Id = 2, Nombre = "Sacrificio", Descripcion = "Consume totalmente la vida de un personaje aliado para potenciar grandemente al personaje activo..", Cooldown = 5, Imagen = "../../src/assets/images/habilities/sacrifice.png"}
         );
         
         // Aplicar Snake Case Naming Convention
