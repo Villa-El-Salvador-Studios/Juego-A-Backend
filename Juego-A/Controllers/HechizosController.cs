@@ -3,7 +3,6 @@ using JuegoA_API.Juego_A.Domain.Models;
 using JuegoA_API.Juego_A.Domain.Services;
 using JuegoA_API.Juego_A.Resources;
 using JuegoA_API.Shared.Extensions;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JuegoA_API.Juego_A.Controllers;

@@ -74,8 +74,7 @@ public class AppDbContext : DbContext
         builder.Entity<Hechizo>().Property(p=>p.Cooldown).IsRequired();
 
         builder.Entity<JugadorHechizo>().ToTable("JugadorHechizo");
-        builder.Entity<JugadorHechizo>().HasKey(p => p.JugadorId);
-        builder.Entity<JugadorHechizo>().HasKey(p => p.HechizoId);
+        builder.Entity<JugadorHechizo>().HasKey(p => new {p.JugadorId, p.HechizoId});
         builder.Entity<JugadorHechizo>().Property(p => p.JugadorId).IsRequired();
         builder.Entity<JugadorHechizo>().Property(p => p.HechizoId).IsRequired();
         

@@ -3,7 +3,6 @@
 public class JugadorHechizo
 {
     // Relaciones
-    
     public int? JugadorId { get; set; }
     public Jugador Jugador { get; set; }
     public int? HechizoId { get; set; }
