@@ -10,10 +10,11 @@ public class AppDbContext : DbContext
     public DbSet<Jugador> Jugadores { get; set; }
     public DbSet<Personaje> Personajes { get; set; }
     public DbSet<Mundo> Mundos { get; set; }
-    public DbSet<Habilidades> Habilidades { get; set; }
+    public DbSet<Habilidad> Habilidades { get; set; }
     public DbSet<Objeto> Objetos { get; set; }
     public DbSet<Hechizo> Hechizos { get; set; }
     public DbSet<JugadorHechizo> JugadorHechizos { get; set; }
+    public DbSet<HabilidadPersonaje> HabilidadPersonajes { get; set; }
     
     public AppDbContext(DbContextOptions options) : base(options)
     {
@@ -50,13 +51,11 @@ public class AppDbContext : DbContext
         builder.Entity<Mundo>().Property(p => p.SongId).IsRequired();
         builder.Entity<Mundo>().Property(p => p.Nombre).IsRequired();
 
-        builder.Entity<Habilidades>().ToTable("Habilidades");
-        builder.Entity<Habilidades>().HasKey(p => p.Id);
-        builder.Entity<Habilidades>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-        builder.Entity<Habilidades>().Property(p => p.Habilidad1).IsRequired();
-        builder.Entity<Habilidades>().Property(p => p.Habilidad2).IsRequired();
-        builder.Entity<Habilidades>().Property(p => p.Habilidad3).IsRequired();
-        builder.Entity<Habilidades>().Property(p => p.Habilidad4).IsRequired();
+        builder.Entity<Habilidad>().ToTable("Habilidades");
+        builder.Entity<Habilidad>().HasKey(p => p.Id);
+        builder.Entity<Habilidad>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+        builder.Entity<Habilidad>().Property(p => p.Nombre).IsRequired();
+        builder.Entity<Habilidad>().Property(p => p.RutaAudio).IsRequired();
 
         builder.Entity<Objeto>().ToTable("Objetos");
         builder.Entity<Objeto>().HasKey(p => p.Id);
@@ -77,6 +76,11 @@ public class AppDbContext : DbContext
         builder.Entity<JugadorHechizo>().HasKey(p => new {p.JugadorId, p.HechizoId});
         builder.Entity<JugadorHechizo>().Property(p => p.JugadorId).IsRequired();
         builder.Entity<JugadorHechizo>().Property(p => p.HechizoId).IsRequired();
+
+        builder.Entity<HabilidadPersonaje>().ToTable("HabilidadPersonaje");
+        builder.Entity<HabilidadPersonaje>().HasKey(p => new {p.HabilidadId, p.PersonajeId});
+        builder.Entity<HabilidadPersonaje>().Property(p => p.HabilidadId).IsRequired();
+        builder.Entity<HabilidadPersonaje>().Property(p => p.PersonajeId).IsRequired();
         
         // Relaciones
         
@@ -98,12 +102,6 @@ public class AppDbContext : DbContext
             .WithOne(m => m.Personaje)
             .HasForeignKey<Mundo>(m => m.Personaje_Id);
         
-        // Relacion entre personaje y habilidad (uno a uno)
-        builder.Entity<Personaje>()
-            .HasOne(p => p.Habilidades)
-            .WithOne(h => h.Personaje)
-            .HasForeignKey<Habilidades>(h => h.PersonajeId).IsRequired(false);
-        
         // Relacion entre jugador y objeto (uno a muchos)
         builder.Entity<Jugador>()
             .HasMany(j => j.Objetos)
@@ -121,6 +119,17 @@ public class AppDbContext : DbContext
             .WithMany(h => h.Jugadores)
             .HasForeignKey(jh => jh.HechizoId).IsRequired(false);
         
+        // Relacion entre personaje y habilidad (muchos a muchos)
+        builder.Entity<HabilidadPersonaje>()
+            .HasOne(hp => hp.Habilidad)
+            .WithMany(h => h.Personajes)
+            .HasForeignKey(hp => hp.HabilidadId).IsRequired(false);
+
+        builder.Entity<HabilidadPersonaje>()
+            .HasOne(hp => hp.Personaje)
+            .WithMany(p => p.Habilidades)
+            .HasForeignKey(hp => hp.PersonajeId).IsRequired(false);
+        
         // Agregar datos por defecto a la base de datos
         builder.Entity<Personaje>().HasData(
              new Personaje {Id = 1, Vida = 1000, Nivel = 1, Nombre = "Boss 1", Ataque = 100, Experiencia = 0, Imagen = "../../src/assets/images/bosses/boss1.png"},
@@ -130,13 +139,31 @@ public class AppDbContext : DbContext
              new Personaje {Id = 5, Vida = 5063, Nivel = 5, Nombre = "Boss 5", Ataque = 506, Experiencia = 0, Imagen = "../../src/assets/images/bosses/boss5.png"}
         );
 
-        builder.Entity<Habilidades>().HasData(
-            new Habilidades { Id = 1, Habilidad1 = "Patada nuclear", Habilidad2 = "Patada del tigre", Habilidad3 = "Plaka", Habilidad4 = "En la 100 o en la 101", PersonajeId = 1},
-            new Habilidades { Id = 2, Habilidad1 = "Hola Dabo soy chileno", Habilidad2 = "Juan", Habilidad3 = "Voy a mostrar las tetas", Habilidad4 = "Coca Cola espuma", PersonajeId = 2},
-            new Habilidades { Id = 3, Habilidad1 = "EXPLOSIOOOOOOON", Habilidad2 = "Que toda su familia pille covid", Habilidad3 = "Coquerooo", Habilidad4 = "La tocó", PersonajeId = 3},
-            new Habilidades { Id = 4, Habilidad1 = "Ankara Messi", Habilidad2 = "Bing Chilling", Habilidad3 = "Wenomechainsama", Habilidad4 = "Metal pipe falling", PersonajeId = 4},
-            new Habilidades { Id = 5, Habilidad1 = "Ok I pull up", Habilidad2 = "Moai sound", Habilidad3 = "Wtf is a kilometer", Habilidad4 = "Hello im under the water", PersonajeId = 5},
-            new Habilidades { Id = 6, Habilidad1 = "Bichito de luz", Habilidad2 = "EPAAAAAA", Habilidad3 = "Enden ring", Habilidad4 = "Desayuna con huevo"}
+        builder.Entity<Habilidad>().HasData(
+            new Habilidad { Id = 1, Nombre = "Patada nuclear", RutaAudio = "../../src/assets/audios/HbtSFX/patadaNuclear.mp3"},
+            new Habilidad { Id = 2, Nombre = "Patada del tigre", RutaAudio = "../../src/assets/audios/HbtSFX/patadaDelTigre.mp3"},
+            new Habilidad { Id = 3, Nombre = "Plaka", RutaAudio = "../../src/assets/audios/HbtSFX/plaka.mp3"},
+            new Habilidad { Id = 4, Nombre = "En la 100 o en la 101", RutaAudio = "../../src/assets/audios/HbtSFX/enLa100OEnLa101.mp3"},
+            new Habilidad { Id = 5, Nombre = "Bichito de luz", RutaAudio = "../../src/assets/audios/HbtSFX/bichitoDeLuz.mp3"},
+            new Habilidad { Id = 6, Nombre = "EPAAAAAA", RutaAudio = "../../src/assets/audios/HbtSFX/epa.mp3"},
+            new Habilidad { Id = 7, Nombre = "Elden ring", RutaAudio = "../../src/assets/audios/HbtSFX/eldenRing.mp3"},
+            new Habilidad { Id = 8, Nombre = "Desayuna con huevo", RutaAudio = "../../src/assets/audios/HbtSFX/desayunaConHuevo.mp3"},
+            new Habilidad { Id = 9, Nombre = "Hola Dabo soy chileno", RutaAudio = "../../src/assets/audios/HbtSFX/holaDaboSoyChileno.mp3"},
+            new Habilidad { Id = 10, Nombre = "Juan", RutaAudio = "../../src/assets/audios/HbtSFX/juan.mp3"},
+            new Habilidad { Id = 11, Nombre = "Voy a mostrar las tetas", RutaAudio = "../../src/assets/audios/HbtSFX/voyAMostrarLasTetas.mp3"},
+            new Habilidad { Id = 12, Nombre = "Coca Cola espuma", RutaAudio = "../../src/assets/audios/HbtSFX/cocaColaEspuma.mp3"},
+            new Habilidad { Id = 13, Nombre = "EXPLOSIOOOOOOON", RutaAudio = "../../src/assets/audios/HbtSFX/explosion.mp3"},
+            new Habilidad { Id = 14, Nombre = "Que toda su familia pille covid", RutaAudio = "../../src/assets/audios/HbtSFX/queTodaSuFamiliaPilleCovid.mp3"},
+            new Habilidad { Id = 15, Nombre = "Coquerooo", RutaAudio = "../../src/assets/audios/HbtSFX/coquero.mp3"},
+            new Habilidad { Id = 16, Nombre = "La tocó", RutaAudio = "../../src/assets/audios/HbtSFX/laToco.mp3"},
+            new Habilidad { Id = 17, Nombre = "Ankara Messi", RutaAudio = "../../src/assets/audios/HbtSFX/ankaraMessi.mp3"},
+            new Habilidad { Id = 18, Nombre = "Bing Chilling", RutaAudio = "../../src/assets/audios/HbtSFX/bingChilling.mp3"},
+            new Habilidad { Id = 19, Nombre = "Wenomechainsama", RutaAudio = "../../src/assets/audios/HbtSFX/wenomechainsama.mp3"},
+            new Habilidad { Id = 20, Nombre = "Metal pipe falling", RutaAudio = "../../src/assets/audios/HbtSFX/metalPipeFalling.mp3"},
+            new Habilidad { Id = 21, Nombre = "Ok I pull up", RutaAudio = "../../src/assets/audios/HbtSFX/okIPullUp.mp3"},
+            new Habilidad { Id = 22, Nombre = "Moai sound", RutaAudio = "../../src/assets/audios/HbtSFX/moaiSound.mp3"},
+            new Habilidad { Id = 23, Nombre = "Wtf is a kilometer", RutaAudio = "../../src/assets/audios/HbtSFX/wtfIsAKilometer.mp3"},
+            new Habilidad { Id = 24, Nombre = "Hello im under the water", RutaAudio = "../../src/assets/audios/HbtSFX/helloImUnderTheWater.mp3"}
         );
         
         builder.Entity<Mundo>().HasData(
@@ -159,6 +186,29 @@ public class AppDbContext : DbContext
         builder.Entity<Hechizo>().HasData(
             new Hechizo {Id = 1, Nombre = "Silencio", Descripcion = "Envuelve al enemigo en silencio mágico, impidiéndole lanzar hechizos y atacar verbalmente durante 1 turno.", Cooldown = 3, Imagen = "../../src/assets/images/habilities/silence.png"},
             new Hechizo {Id = 2, Nombre = "Sacrificio", Descripcion = "Consume totalmente la vida de un personaje aliado para potenciar grandemente al personaje activo..", Cooldown = 5, Imagen = "../../src/assets/images/habilities/sacrifice.png"}
+        );
+
+        builder.Entity<HabilidadPersonaje>().HasData(
+            new HabilidadPersonaje { HabilidadId = 1, PersonajeId = 1 },
+            new HabilidadPersonaje { HabilidadId = 2, PersonajeId = 1 },
+            new HabilidadPersonaje { HabilidadId = 3, PersonajeId = 1 },
+            new HabilidadPersonaje { HabilidadId = 4, PersonajeId = 1 },
+            new HabilidadPersonaje { HabilidadId = 5, PersonajeId = 2 },
+            new HabilidadPersonaje { HabilidadId = 6, PersonajeId = 2 },
+            new HabilidadPersonaje { HabilidadId = 7, PersonajeId = 2 },
+            new HabilidadPersonaje { HabilidadId = 8, PersonajeId = 2 },
+            new HabilidadPersonaje { HabilidadId = 9, PersonajeId = 3 },
+            new HabilidadPersonaje { HabilidadId = 10, PersonajeId = 3 },
+            new HabilidadPersonaje { HabilidadId = 11, PersonajeId = 3 },
+            new HabilidadPersonaje { HabilidadId = 12, PersonajeId = 3 },
+            new HabilidadPersonaje { HabilidadId = 13, PersonajeId = 4 },
+            new HabilidadPersonaje { HabilidadId = 14, PersonajeId = 4 },
+            new HabilidadPersonaje { HabilidadId = 15, PersonajeId = 4 },
+            new HabilidadPersonaje { HabilidadId = 16, PersonajeId = 4 },
+            new HabilidadPersonaje { HabilidadId = 17, PersonajeId = 5 },
+            new HabilidadPersonaje { HabilidadId = 18, PersonajeId = 5 },
+            new HabilidadPersonaje { HabilidadId = 19, PersonajeId = 5 },
+            new HabilidadPersonaje { HabilidadId = 20, PersonajeId = 5 }
         );
         
         // Aplicar Snake Case Naming Convention

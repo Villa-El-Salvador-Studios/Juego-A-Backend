@@ -11,53 +11,36 @@ namespace JuegoA_API.Juego_A.Controllers;
 [Route("api/v1/[controller]")]
 public class HabilidadesController : ControllerBase
 {
-    private readonly IHabilidadesService _habilidadesService;
+    private readonly IHabilidadService _habilidadService;
     private readonly IMapper _mapper;
     
-    public HabilidadesController(IHabilidadesService habilidadesService, IMapper mapper)
+    public HabilidadesController(IHabilidadService habilidadService, IMapper mapper)
     {
-        _habilidadesService = habilidadesService;
+        _habilidadService = habilidadService;
         _mapper = mapper;
     }
     
     [HttpGet]
-    public async Task<IEnumerable<HabilidadesResource>> GetAllAsync()
+    public async Task<IEnumerable<HabilidadResource>> GetAllAsync()
     {
-        var habilidades = await _habilidadesService.ListAsync();
-        var resources = _mapper.Map<IEnumerable<Habilidades>, 
-            IEnumerable<HabilidadesResource>>(habilidades);
+        var habilidades = await _habilidadService.ListAsync();
+        var resources = _mapper.Map<IEnumerable<Habilidad>, 
+            IEnumerable<HabilidadResource>>(habilidades);
         return resources;
     }
     
     [HttpGet("{id}")]
     public async Task<IActionResult> GetByIdAsync(int id)
     {
-        var habilidades = await _habilidadesService.ReturnById(id);
+        var habilidades = await _habilidadService.ReturnById(id);
         
         if (habilidades == null)
         {
             return NotFound($"Set de habilidades con ID {id} no encontrado.");
         }
         
-        var habilidadesResource = _mapper.Map<Habilidades, HabilidadesResource>(habilidades);
+        var habilidadesResource = _mapper.Map<Habilidad, HabilidadResource>(habilidades);
 
-        return Ok(habilidadesResource);
-    }
-    
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutAsync(int id, [FromBody] SaveHabilidadesResource resource)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState.GetErrorMessages());
- 
-        var habilidades = _mapper.Map<SaveHabilidadesResource, Habilidades>(resource);
-        var result = await _habilidadesService.UpdateAsync(id, habilidades);
- 
-        if (!result.Success)
-            return BadRequest(result.Message);
-        
-        var habilidadesResource = _mapper.Map<Habilidades, HabilidadesResource>(result.Resource);
-        
         return Ok(habilidadesResource);
     }
 }

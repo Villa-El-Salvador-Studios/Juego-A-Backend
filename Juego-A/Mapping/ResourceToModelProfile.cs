@@ -11,9 +11,10 @@ public class ResourceToModelProfile : Profile
         CreateMap<SaveJugadorResource, Jugador>();
         CreateMap<SavePersonajeResource, Personaje>();
         CreateMap<SaveMundoResource, Mundo>();
-        CreateMap<SaveHabilidadesResource, Habilidades>();
+        CreateMap<SaveHabilidadResource, Habilidad>();
         CreateMap<SaveObjetoResource, Objeto>();
         CreateMap<SaveHechizoResource, Hechizo>();
         CreateMap<JugadorHechizoResource, JugadorHechizo>();
+        CreateMap<HabilidadPersonajeResource, HabilidadPersonaje>();
     }
 }

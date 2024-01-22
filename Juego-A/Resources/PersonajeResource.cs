@@ -14,5 +14,4 @@ public class PersonajeResource
     
     // Correccion para que aparezca correctamente el foreign key.
     public int? JugadorId { get; set; }
-    public int HabilidadId { get; set; }
 }

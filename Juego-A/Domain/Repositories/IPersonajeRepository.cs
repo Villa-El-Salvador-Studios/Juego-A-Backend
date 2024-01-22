@@ -5,6 +5,7 @@ namespace JuegoA_API.Juego_A.Domain.Repositories;
 public interface IPersonajeRepository
 {
     Task<IEnumerable<Personaje>> ListAsync();
+    Task<IEnumerable<Personaje>> FindByJugadorIdAsync(int jugadorId);
     Task<Personaje> FindByIdAsync(int id);
     Task<Personaje> FindByNombreAsync(string nombre);
     Task AddAsync(Personaje personaje);

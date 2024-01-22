@@ -17,6 +17,15 @@ public class PersonajeRepository : BaseRepository, IPersonajeRepository
         return await _context.Personajes.ToListAsync();
     }
 
+    public async Task<IEnumerable<Personaje>> FindByJugadorIdAsync(int jugadorId)
+    {
+        var personajes = await _context.Personajes
+            .Where(p => p.JugadorId == jugadorId)
+            .ToListAsync();
+
+        return personajes;
+    }
+
     public async Task<Personaje> FindByIdAsync(int id)
     {
         return await _context.Personajes.FindAsync(id);

@@ -9,5 +9,4 @@ public class SavePersonajeResource
     public int Experiencia { get; set; }
     public string Imagen { get; set; }
     public int? JugadorId { get; set; }
-    public int HabilidadId { get; set; }
 }

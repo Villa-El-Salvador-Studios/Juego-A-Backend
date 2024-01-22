@@ -21,6 +21,11 @@ public class PersonajeService : IPersonajeService
         return await _personajeRepository.ListAsync();
     }
 
+    public async Task<IEnumerable<Personaje>> ReturnByJugadorId(int jugadorId)
+    {
+        return await _personajeRepository.FindByJugadorIdAsync(jugadorId);
+    }
+
     public async Task<Personaje> ReturnById(int id)
     {
         return await _personajeRepository.FindByIdAsync(id);
@@ -58,7 +63,6 @@ public class PersonajeService : IPersonajeService
         existingPersonaje.Ataque = personaje.Ataque;
         existingPersonaje.Experiencia = personaje.Experiencia;
         existingPersonaje.Imagen = personaje.Imagen;
-        existingPersonaje.HabilidadId = personaje.HabilidadId;
         
         try
         {

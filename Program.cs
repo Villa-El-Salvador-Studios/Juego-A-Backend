@@ -38,14 +38,16 @@ builder.Services.AddScoped<IPersonajeRepository, PersonajeRepository>();
 builder.Services.AddScoped<IPersonajeService, PersonajeService>();
 builder.Services.AddScoped<IMundoRepository, MundoRepository>();
 builder.Services.AddScoped<IMundoService, MundoService>();
-builder.Services.AddScoped<IHabilidadesService, HabilidadesService>();
-builder.Services.AddScoped<IHabilidadesRepository, HabilidadesRepository>();
+builder.Services.AddScoped<IHabilidadService, HabilidadService>();
+builder.Services.AddScoped<IHabilidadRepository, HabilidadRepository>();
 builder.Services.AddScoped<IObjetoService, ObjetoService>();
 builder.Services.AddScoped<IObjetoRepository, ObjetoRepository>();
 builder.Services.AddScoped<IHechizoService, HechizoService>();
 builder.Services.AddScoped<IHechizoRepository, HechizoRepository>();
 builder.Services.AddScoped<IJugadorHechizoService, JugadorHechizoService>();
 builder.Services.AddScoped<IJugadorHechizoRepository, JugadorHechizoRepository>();
+builder.Services.AddScoped<IHabilidadPersonajeRepository, HabilidadPersonajeRepository>();
+builder.Services.AddScoped<IHabilidadPersonajeService, HabilidadPersonajeService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // AutoMapper Configuration
 builder.Services.AddAutoMapper(

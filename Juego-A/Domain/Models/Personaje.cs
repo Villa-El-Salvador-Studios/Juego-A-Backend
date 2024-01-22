@@ -14,6 +14,5 @@ public class Personaje
     public int? JugadorId { get; set; }
     public Jugador Jugador { get; set; }
     public Mundo Mundo { get; set; }
-    public int HabilidadId { get; set; }
-    public Habilidades Habilidades { get; set; }
+    public IList<HabilidadPersonaje> Habilidades = new List<HabilidadPersonaje>();
 }

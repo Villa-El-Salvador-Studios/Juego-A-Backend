@@ -42,6 +42,21 @@ public class PersonajesController : ControllerBase
 
         return Ok(personajeResource);
     }
+
+    [HttpGet("jugador/{jugadorId}")]
+    public async Task<IActionResult> GetByJugadorId(int jugadorId)
+    {
+        var personajes = await _personajeService.ReturnByJugadorId(jugadorId);
+        
+        if (personajes == null)
+        {
+            return NotFound($"No existen personajes ligados al jugador con el ID: {jugadorId}.");
+        }
+        
+        var personajesResource = _mapper.Map<IEnumerable<Personaje>, IEnumerable<PersonajeResource>>(personajes);
+
+        return Ok(personajesResource);
+    }
     
     [HttpPost]
     public async Task<IActionResult> PostAsync([FromBody] SavePersonajeResource resource)
