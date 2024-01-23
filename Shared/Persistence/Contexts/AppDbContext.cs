@@ -15,6 +15,7 @@ public class AppDbContext : DbContext
     public DbSet<Hechizo> Hechizos { get; set; }
     public DbSet<JugadorHechizo> JugadorHechizos { get; set; }
     public DbSet<HabilidadPersonaje> HabilidadPersonajes { get; set; }
+    public DbSet<JugadorObjeto> JugadorObjetos { get; set; }
     
     public AppDbContext(DbContextOptions options) : base(options)
     {
@@ -62,7 +63,6 @@ public class AppDbContext : DbContext
         builder.Entity<Objeto>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Objeto>().Property(p => p.Nombre).IsRequired();
         builder.Entity<Objeto>().Property(p => p.Descripcion).IsRequired();
-        builder.Entity<Objeto>().Property(p => p.Cantidad).IsRequired();
         builder.Entity<Objeto>().Property(p => p.Imagen).IsRequired();
 
         builder.Entity<Hechizo>().ToTable("Hechizos");
@@ -81,6 +81,12 @@ public class AppDbContext : DbContext
         builder.Entity<HabilidadPersonaje>().HasKey(p => new {p.HabilidadId, p.PersonajeId});
         builder.Entity<HabilidadPersonaje>().Property(p => p.HabilidadId).IsRequired();
         builder.Entity<HabilidadPersonaje>().Property(p => p.PersonajeId).IsRequired();
+
+        builder.Entity<JugadorObjeto>().ToTable("JugadorObjeto");
+        builder.Entity<JugadorObjeto>().HasKey(p => new { p.JugadorId, p.ObjetoId });
+        builder.Entity<JugadorObjeto>().Property(p => p.JugadorId).IsRequired();
+        builder.Entity<JugadorObjeto>().Property(p => p.ObjetoId).IsRequired();
+        builder.Entity<JugadorObjeto>().Property(p => p.Cantidad).IsRequired();
         
         // Relaciones
         
@@ -101,12 +107,6 @@ public class AppDbContext : DbContext
             .HasOne(p => p.Mundo)
             .WithOne(m => m.Personaje)
             .HasForeignKey<Mundo>(m => m.Personaje_Id);
-        
-        // Relacion entre jugador y objeto (uno a muchos)
-        builder.Entity<Jugador>()
-            .HasMany(j => j.Objetos)
-            .WithOne(o => o.Jugador)
-            .HasForeignKey(o => o.jugadorId).IsRequired(false);
         
         // Relacion entre jugador y hechizo (uno a muchos)
         builder.Entity<JugadorHechizo>()
@@ -129,6 +129,17 @@ public class AppDbContext : DbContext
             .HasOne(hp => hp.Personaje)
             .WithMany(p => p.Habilidades)
             .HasForeignKey(hp => hp.PersonajeId).IsRequired(false);
+        
+        // Relacion entre jugador y objeto (muchos a muchos)
+        builder.Entity<JugadorObjeto>()
+            .HasOne(jo => jo.Objeto)
+            .WithMany(o => o.Jugadores)
+            .HasForeignKey(jo => jo.ObjetoId).IsRequired(false);
+        
+        builder.Entity<JugadorObjeto>()
+            .HasOne(jo => jo.Jugador)
+            .WithMany(j => j.Objetos)
+            .HasForeignKey(jo => jo.JugadorId).IsRequired(false);
         
         // Agregar datos por defecto a la base de datos
         builder.Entity<Personaje>().HasData(
@@ -175,12 +186,12 @@ public class AppDbContext : DbContext
         );
 
         builder.Entity<Objeto>().HasData(
-            new Objeto {Id = 1, Nombre = "Pocion de curacion S", Descripcion = "Sana heridas menores al instante. Sabor dulce y herbal.", Cantidad = 0, Imagen = "../../src/assets/images/objects/shtpt.png", jugadorId = null},
-            new Objeto {Id = 2, Nombre = "Pocion de curacion M", Descripcion = "Cura heridas moderadas, restaura vitalidad. Sabor complejo con toques de frutas.", Cantidad = 0, Imagen = "../../src/assets/images/objects/mhtpt.png", jugadorId = null},
-            new Objeto {Id = 3, Nombre = "Pocion de curacion L", Descripcion = "Sana heridas graves, restablece la salud. Sabor robusto con hierbas y especias.", Cantidad = 0, Imagen = "../../src/assets/images/objects/lhtpt.png", jugadorId = null},
-            new Objeto {Id = 4, Nombre = "Pocion de ataque", Descripcion = "Al consumirla, otorga un aumento temporal de fuerza y destreza en combate. Su sabor es intenso, con un toque picante y eléctrico que energiza al bebedor.", Cantidad = 0, Imagen = "../../src/assets/images/objects/atkpt.png", jugadorId = null},
-            new Objeto {Id = 5, Nombre = "Pocion de armadura", Descripcion = "Al beberla, crea un aura protectora alrededor del usuario, aumentando la resistencia contra ataques físicos y mágicos. Su sabor es fresco, con matices metálicos que sugieren fortaleza.", Cantidad = 0, Imagen = "../../src/assets/images/objects/ampt.png", jugadorId = null},
-            new Objeto {Id = 6, Nombre = "Pocion de veneno", Descripcion = "Esta poción se utiliza para envenenar armas o trampas. Al contacto, causa daño gradual y debilitante al objetivo. ", Cantidad = 0, Imagen = "../../src/assets/images/objects/pspt.png", jugadorId = null}
+            new Objeto {Id = 1, Nombre = "Pocion de curacion S", Descripcion = "Sana heridas menores al instante. Sabor dulce y herbal.", Imagen = "../../src/assets/images/objects/shtpt.png"},
+            new Objeto {Id = 2, Nombre = "Pocion de curacion M", Descripcion = "Cura heridas moderadas, restaura vitalidad. Sabor complejo con toques de frutas.", Imagen = "../../src/assets/images/objects/mhtpt.png"},
+            new Objeto {Id = 3, Nombre = "Pocion de curacion L", Descripcion = "Sana heridas graves, restablece la salud. Sabor robusto con hierbas y especias.", Imagen = "../../src/assets/images/objects/lhtpt.png"},
+            new Objeto {Id = 4, Nombre = "Pocion de ataque", Descripcion = "Al consumirla, otorga un aumento temporal de fuerza y destreza en combate. Su sabor es intenso, con un toque picante y eléctrico que energiza al bebedor.", Imagen = "../../src/assets/images/objects/atkpt.png"},
+            new Objeto {Id = 5, Nombre = "Pocion de armadura", Descripcion = "Al beberla, crea un aura protectora alrededor del usuario, aumentando la resistencia contra ataques físicos y mágicos. Su sabor es fresco, con matices metálicos que sugieren fortaleza.", Imagen = "../../src/assets/images/objects/ampt.png"},
+            new Objeto {Id = 6, Nombre = "Pocion de veneno", Descripcion = "Esta poción se utiliza para envenenar armas o trampas. Al contacto, causa daño gradual y debilitante al objetivo. ", Imagen = "../../src/assets/images/objects/pspt.png"}
         );
 
         builder.Entity<Hechizo>().HasData(

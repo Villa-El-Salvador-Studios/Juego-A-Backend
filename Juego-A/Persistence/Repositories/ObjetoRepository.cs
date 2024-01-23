@@ -17,32 +17,8 @@ public class ObjetoRepository : BaseRepository, IObjetoRepository
         return await _context.Objetos.ToListAsync();
     }
 
-    public async Task AddAsync(Objeto objeto)
+    public async Task<Objeto> FindByIdAsync(int id)
     {
-        await _context.Objetos.AddAsync(objeto);
-    }
-
-    public void Remove(Objeto objeto)
-    {
-        _context.Objetos.Remove(objeto);
-    }
-
-    public void Update(Objeto objeto)
-    {
-        _context.Objetos.Update(objeto);
-    }
-
-    public async Task<IEnumerable<Objeto>> GetByJugadorId(int id)
-    {
-        var objetos = await _context.Objetos
-            .Where(o => o.jugadorId == id)
-            .ToListAsync();
-
-        return objetos;
-    }
-
-    public async Task<Objeto> FindIndividualObjectByIdAsync(int id)
-    {
-        return await _context.Objetos.FirstOrDefaultAsync(o => o.Id == id);
+        return await _context.Objetos.FindAsync(id);
     }
 }

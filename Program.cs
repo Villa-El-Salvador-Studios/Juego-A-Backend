@@ -48,6 +48,8 @@ builder.Services.AddScoped<IJugadorHechizoService, JugadorHechizoService>();
 builder.Services.AddScoped<IJugadorHechizoRepository, JugadorHechizoRepository>();
 builder.Services.AddScoped<IHabilidadPersonajeRepository, HabilidadPersonajeRepository>();
 builder.Services.AddScoped<IHabilidadPersonajeService, HabilidadPersonajeService>();
+builder.Services.AddScoped<IJugadorObjetoRepository, JugadorObjetoRepository>();
+builder.Services.AddScoped<IJugadorObjetoService, JugadorObjetoService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 // AutoMapper Configuration
 builder.Services.AddAutoMapper(

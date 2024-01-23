@@ -7,6 +7,5 @@ namespace JuegoA_API.Juego_A.Domain.Services;
 public interface IObjetoService
 {
     Task<IEnumerable<Objeto>> ListAsync();
-    Task<IEnumerable<Objeto>> ReturnByJugadorId(int id);
-    Task<ObjetoResponse> UpdateAsync(int id, Objeto objeto);
+    Task<Objeto> ReturnById(int id);
 }

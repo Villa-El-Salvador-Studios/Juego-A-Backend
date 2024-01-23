@@ -30,34 +30,17 @@ public class ObjetosController : ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetByJugadorIdAsync(int id)
+    public async Task<IActionResult> GetByIdAsync(int id)
     {
-        var objetos = await _objetoService.ReturnByJugadorId(id);
+        var objeto = await _objetoService.ReturnById(id);
 
-        if (objetos.Count() == 0)
+        if (objeto == null)
         {
-            return NotFound($"Objetos con jugador ID {id} no encontrados.");
+            return NotFound($"Objeto con ID {id} no encontrado.");
         }
 
-        var objetoResources = _mapper.Map<IEnumerable<Objeto>, IEnumerable<ObjetoResource>>(objetos);
+        var objetoResource = _mapper.Map<Objeto, ObjetoResource>(objeto);
 
-        return Ok(objetoResources);
-    }
-    
-    [HttpPut("{id}")]
-    public async Task<IActionResult> PutAsync(int id, [FromBody] SaveObjetoResource resource)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState.GetErrorMessages());
- 
-        var objeto = _mapper.Map<SaveObjetoResource, Objeto>(resource);
-        var result = await _objetoService.UpdateAsync(id, objeto);
- 
-        if (!result.Success)
-            return BadRequest(result.Message);
-        
-        var objetoResource = _mapper.Map<Objeto, ObjetoResource>(result.Resource);
-        
         return Ok(objetoResource);
     }
 }

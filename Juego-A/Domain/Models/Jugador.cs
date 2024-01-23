@@ -14,7 +14,7 @@ public class Jugador
     
     public IList<Personaje> Personajes = new List<Personaje>();
 
-    public IList<Objeto> Objetos = new List<Objeto>();
+    public IList<JugadorObjeto> Objetos = new List<JugadorObjeto>();
 
     public IList<JugadorHechizo> Hechizos = new List<JugadorHechizo>();
 }
