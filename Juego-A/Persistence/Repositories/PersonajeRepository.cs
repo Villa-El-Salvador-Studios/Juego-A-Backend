@@ -31,10 +31,10 @@ public class PersonajeRepository : BaseRepository, IPersonajeRepository
         return await _context.Personajes.FindAsync(id);
     }
 
-    public async Task<Personaje> FindByNombreAsync(string nombre)
+    public async Task<Personaje> FindByNombreAndJugadorIdAsync(string nombre, int? jugadorId)
     {
         return await _context.Personajes
-            .FirstOrDefaultAsync(p => p.Nombre == nombre);
+            .FirstOrDefaultAsync(p => p.Nombre == nombre && p.JugadorId == jugadorId);
     }
 
     public async Task AddAsync(Personaje personaje)
