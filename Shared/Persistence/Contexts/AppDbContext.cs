@@ -56,6 +56,7 @@ public class AppDbContext : DbContext
         builder.Entity<Habilidad>().HasKey(p => p.Id);
         builder.Entity<Habilidad>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Entity<Habilidad>().Property(p => p.Nombre).IsRequired();
+        builder.Entity<Habilidad>().Property(p => p.Multiplicador).IsRequired();
         builder.Entity<Habilidad>().Property(p => p.RutaAudio).IsRequired();
 
         builder.Entity<Objeto>().ToTable("Objetos");
@@ -151,30 +152,30 @@ public class AppDbContext : DbContext
         );
 
         builder.Entity<Habilidad>().HasData(
-            new Habilidad { Id = 1, Nombre = "Patada nuclear", RutaAudio = "../../src/assets/audios/HbtSFX/patadaNuclear.mp3"},
-            new Habilidad { Id = 2, Nombre = "Patada del tigre", RutaAudio = "../../src/assets/audios/HbtSFX/patadaDelTigre.mp3"},
-            new Habilidad { Id = 3, Nombre = "Plaka", RutaAudio = "../../src/assets/audios/HbtSFX/plaka.mp3"},
-            new Habilidad { Id = 4, Nombre = "En la 100 o en la 101", RutaAudio = "../../src/assets/audios/HbtSFX/enLa100OEnLa101.mp3"},
-            new Habilidad { Id = 5, Nombre = "Bichito de luz", RutaAudio = "../../src/assets/audios/HbtSFX/bichitoDeLuz.mp3"},
-            new Habilidad { Id = 6, Nombre = "EPAAAAAA", RutaAudio = "../../src/assets/audios/HbtSFX/epa.mp3"},
-            new Habilidad { Id = 7, Nombre = "Elden ring", RutaAudio = "../../src/assets/audios/HbtSFX/eldenRing.mp3"},
-            new Habilidad { Id = 8, Nombre = "Desayuna con huevo", RutaAudio = "../../src/assets/audios/HbtSFX/desayunaConHuevo.mp3"},
-            new Habilidad { Id = 9, Nombre = "Hola Dabo soy chileno", RutaAudio = "../../src/assets/audios/HbtSFX/holaDaboSoyChileno.mp3"},
-            new Habilidad { Id = 10, Nombre = "Juan", RutaAudio = "../../src/assets/audios/HbtSFX/juan.mp3"},
-            new Habilidad { Id = 11, Nombre = "Voy a mostrar las tetas", RutaAudio = "../../src/assets/audios/HbtSFX/voyAMostrarLasTetas.mp3"},
-            new Habilidad { Id = 12, Nombre = "Coca Cola espuma", RutaAudio = "../../src/assets/audios/HbtSFX/cocaColaEspuma.mp3"},
-            new Habilidad { Id = 13, Nombre = "EXPLOSIOOOOOOON", RutaAudio = "../../src/assets/audios/HbtSFX/explosion.mp3"},
-            new Habilidad { Id = 14, Nombre = "Que toda su familia pille covid", RutaAudio = "../../src/assets/audios/HbtSFX/queTodaSuFamiliaPilleCovid.mp3"},
-            new Habilidad { Id = 15, Nombre = "Coquerooo", RutaAudio = "../../src/assets/audios/HbtSFX/coquero.mp3"},
-            new Habilidad { Id = 16, Nombre = "La tocó", RutaAudio = "../../src/assets/audios/HbtSFX/laToco.mp3"},
-            new Habilidad { Id = 17, Nombre = "Ankara Messi", RutaAudio = "../../src/assets/audios/HbtSFX/ankaraMessi.mp3"},
-            new Habilidad { Id = 18, Nombre = "Bing Chilling", RutaAudio = "../../src/assets/audios/HbtSFX/bingChilling.mp3"},
-            new Habilidad { Id = 19, Nombre = "Wenomechainsama", RutaAudio = "../../src/assets/audios/HbtSFX/wenomechainsama.mp3"},
-            new Habilidad { Id = 20, Nombre = "Metal pipe falling", RutaAudio = "../../src/assets/audios/HbtSFX/metalPipeFalling.mp3"},
-            new Habilidad { Id = 21, Nombre = "Ok I pull up", RutaAudio = "../../src/assets/audios/HbtSFX/okIPullUp.mp3"},
-            new Habilidad { Id = 22, Nombre = "Moai sound", RutaAudio = "../../src/assets/audios/HbtSFX/moaiSound.mp3"},
-            new Habilidad { Id = 23, Nombre = "Wtf is a kilometer", RutaAudio = "../../src/assets/audios/HbtSFX/wtfIsAKilometer.mp3"},
-            new Habilidad { Id = 24, Nombre = "Hello im under the water", RutaAudio = "../../src/assets/audios/HbtSFX/helloImUnderTheWater.mp3"}
+            new Habilidad { Id = 1, Multiplicador = 0.1, Nombre = "Patada nuclear", RutaAudio = "../../src/assets/audios/HbtSFX/patadaNuclear.mp3"},
+            new Habilidad { Id = 2, Multiplicador = 0.2, Nombre = "Patada del tigre", RutaAudio = "../../src/assets/audios/HbtSFX/patadaDelTigre.mp3"},
+            new Habilidad { Id = 3, Multiplicador = 0.3, Nombre = "Plaka", RutaAudio = "../../src/assets/audios/HbtSFX/plaka.mp3"},
+            new Habilidad { Id = 4, Multiplicador = 0.4, Nombre = "En la 100 o en la 101", RutaAudio = "../../src/assets/audios/HbtSFX/enLa100OEnLa101.mp3"},
+            new Habilidad { Id = 5, Multiplicador = 0.5, Nombre = "Bichito de luz", RutaAudio = "../../src/assets/audios/HbtSFX/bichitoDeLuz.mp3"},
+            new Habilidad { Id = 6, Multiplicador = 0.6, Nombre = "EPAAAAAA", RutaAudio = "../../src/assets/audios/HbtSFX/epa.mp3"},
+            new Habilidad { Id = 7, Multiplicador = 0.7, Nombre = "Elden ring", RutaAudio = "../../src/assets/audios/HbtSFX/eldenRing.mp3"},
+            new Habilidad { Id = 8, Multiplicador = 0.8, Nombre = "Desayuna con huevo", RutaAudio = "../../src/assets/audios/HbtSFX/desayunaConHuevo.mp3"},
+            new Habilidad { Id = 9, Multiplicador = 0.9, Nombre = "Hola Dabo soy chileno", RutaAudio = "../../src/assets/audios/HbtSFX/holaDaboSoyChileno.mp3"},
+            new Habilidad { Id = 10, Multiplicador = 1, Nombre = "Juan", RutaAudio = "../../src/assets/audios/HbtSFX/juan.mp3"},
+            new Habilidad { Id = 11, Multiplicador = 1.1, Nombre = "Voy a mostrar las tetas", RutaAudio = "../../src/assets/audios/HbtSFX/voyAMostrarLasTetas.mp3"},
+            new Habilidad { Id = 12, Multiplicador = 1.2, Nombre = "Coca Cola espuma", RutaAudio = "../../src/assets/audios/HbtSFX/cocaColaEspuma.mp3"},
+            new Habilidad { Id = 13, Multiplicador = 1.3, Nombre = "EXPLOSIOOOOOOON", RutaAudio = "../../src/assets/audios/HbtSFX/explosion.mp3"},
+            new Habilidad { Id = 14, Multiplicador = 1.4, Nombre = "Que toda su familia pille covid", RutaAudio = "../../src/assets/audios/HbtSFX/queTodaSuFamiliaPilleCovid.mp3"},
+            new Habilidad { Id = 15, Multiplicador = 1.5, Nombre = "Coquerooo", RutaAudio = "../../src/assets/audios/HbtSFX/coquero.mp3"},
+            new Habilidad { Id = 16, Multiplicador = 1.6, Nombre = "La tocó", RutaAudio = "../../src/assets/audios/HbtSFX/laToco.mp3"},
+            new Habilidad { Id = 17, Multiplicador = 1.7, Nombre = "Ankara Messi", RutaAudio = "../../src/assets/audios/HbtSFX/ankaraMessi.mp3"},
+            new Habilidad { Id = 18, Multiplicador = 1.8, Nombre = "Bing Chilling", RutaAudio = "../../src/assets/audios/HbtSFX/bingChilling.mp3"},
+            new Habilidad { Id = 19, Multiplicador = 1.9, Nombre = "Wenomechainsama", RutaAudio = "../../src/assets/audios/HbtSFX/wenomechainsama.mp3"},
+            new Habilidad { Id = 20, Multiplicador = 2, Nombre = "Metal pipe falling", RutaAudio = "../../src/assets/audios/HbtSFX/metalPipeFalling.mp3"},
+            new Habilidad { Id = 21, Multiplicador = 1, Nombre = "Ok I pull up", RutaAudio = "../../src/assets/audios/HbtSFX/okIPullUp.mp3"},
+            new Habilidad { Id = 22, Multiplicador = 1, Nombre = "Moai sound", RutaAudio = "../../src/assets/audios/HbtSFX/moaiSound.mp3"},
+            new Habilidad { Id = 23, Multiplicador = 1.5, Nombre = "Wtf is a kilometer", RutaAudio = "../../src/assets/audios/HbtSFX/wtfIsAKilometer.mp3"},
+            new Habilidad { Id = 24, Multiplicador = 2, Nombre = "Hello im under the water", RutaAudio = "../../src/assets/audios/HbtSFX/helloImUnderTheWater.mp3"}
         );
         
         builder.Entity<Mundo>().HasData(
