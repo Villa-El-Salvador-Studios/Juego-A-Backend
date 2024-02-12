@@ -191,8 +191,7 @@ public class AppDbContext : DbContext
             new Objeto {Id = 2, Nombre = "Pocion de curacion M", Descripcion = "Cura heridas moderadas, restaura vitalidad. Sabor complejo con toques de frutas.", Imagen = "../../src/assets/images/objects/mhtpt.png"},
             new Objeto {Id = 3, Nombre = "Pocion de curacion L", Descripcion = "Sana heridas graves, restablece la salud. Sabor robusto con hierbas y especias.", Imagen = "../../src/assets/images/objects/lhtpt.png"},
             new Objeto {Id = 4, Nombre = "Pocion de ataque", Descripcion = "Al consumirla, otorga un aumento temporal de fuerza y destreza en combate. Su sabor es intenso, con un toque picante y eléctrico que energiza al bebedor.", Imagen = "../../src/assets/images/objects/atkpt.png"},
-            new Objeto {Id = 5, Nombre = "Pocion de armadura", Descripcion = "Al beberla, crea un aura protectora alrededor del usuario, aumentando la resistencia contra ataques físicos y mágicos. Su sabor es fresco, con matices metálicos que sugieren fortaleza.", Imagen = "../../src/assets/images/objects/ampt.png"},
-            new Objeto {Id = 6, Nombre = "Pocion de veneno", Descripcion = "Esta poción se utiliza para envenenar armas o trampas. Al contacto, causa daño gradual y debilitante al objetivo. ", Imagen = "../../src/assets/images/objects/pspt.png"}
+            new Objeto {Id = 5, Nombre = "Pocion de veneno", Descripcion = "Esta poción se utiliza para envenenar armas o trampas. Al contacto, causa daño gradual y debilitante al objetivo. ", Imagen = "../../src/assets/images/objects/pspt.png"}
         );
 
         builder.Entity<Hechizo>().HasData(
