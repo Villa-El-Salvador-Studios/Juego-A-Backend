@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "SXx8e46/tT180Rr04f04Brxtc4aIDlmVZdZEEqTjckBdOilvdJNpp4LW+wISmruxn8g5pxRQyJdy/CzGyiLl6A==",
+  "dgSpecHash": "x0yDuOTtYzZ8skFEKVXgrhIQjKZbgxzrLm/+0JiJz0pqdqDWDBU7hOmYeJhLoh/IXKU2qkYn0FqZAI2ilc6MIg==",
   "success": true,
   "projectFilePath": "D:\\Proyectos independientes\\Juego A\\Backend\\JuegoA-API\\JuegoA-API.csproj",
   "expectedPackageFiles": [
@@ -35,6 +35,8 @@
     "C:\\Users\\user\\.nuget\\packages\\mysql.data\\8.0.33\\mysql.data.8.0.33.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\mysql.entityframeworkcore\\7.0.2\\mysql.entityframeworkcore.7.0.2.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\netstandard.library\\2.0.0-preview1-25301-01\\netstandard.library.2.0.0-preview1-25301-01.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.11\\npgsql.entityframeworkcore.postgresql.7.0.11.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",

@@ -69,3 +69,5 @@ D:\Proyectos independientes\Juego A\Backend\JuegoA-API\obj\Debug\net7.0\refint\J
 D:\Proyectos independientes\Juego A\Backend\JuegoA-API\obj\Debug\net7.0\JuegoA-API.pdb
 D:\Proyectos independientes\Juego A\Backend\JuegoA-API\obj\Debug\net7.0\JuegoA-API.genruntimeconfig.cache
 D:\Proyectos independientes\Juego A\Backend\JuegoA-API\obj\Debug\net7.0\ref\JuegoA-API.dll
+D:\Proyectos independientes\Juego A\Backend\JuegoA-API\bin\Debug\net7.0\Npgsql.dll
+D:\Proyectos independientes\Juego A\Backend\JuegoA-API\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
